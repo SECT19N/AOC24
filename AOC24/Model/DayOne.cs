@@ -8,8 +8,8 @@ public class DayOne {
 	public static int Sum() {
 		int sum = 0;
 
-		List<int> leftNums = new();
-		List<int> rightNums = new();
+		List<int> leftNums = [];
+		List<int> rightNums = [];
 
 		foreach (string line in ReadString()) {
 			string[] parts = line.Split("   ");
@@ -30,5 +30,33 @@ public class DayOne {
 
 	public static int Difference(int left, int right) {
 		return Math.Abs(left - right);
+	}
+	
+	public static int Similiarity() {
+		int score = 0;
+
+		List<int> leftNums = [];
+		List<int> rightNums = [];
+
+		foreach (string line in ReadString()) {
+			string[] parts = line.Split("   ");
+
+			leftNums.Add(int.Parse(parts[0]));
+			rightNums.Add(int.Parse(parts[1]));
+		}
+
+		foreach (int left in leftNums) {
+			int sim = 0;
+
+			foreach (int right in rightNums) {
+				if (left == right) {
+					sim++;
+				}
+			}
+
+			score += left * sim;
+		}
+
+		return score;
 	}
 }
