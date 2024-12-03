@@ -9,5 +9,7 @@ public class Program {
 
 		Console.WriteLine($"Safe reports: {DayTwo.CheckSafety()}");
 		Console.WriteLine($"Safe reports with dampeners: {DayTwo.CheckSafetyWithDampeners()}");
+
+		Console.WriteLine($"Uncorrupted mul scores: {DayThree.AddUp()}");
 	}
 }
