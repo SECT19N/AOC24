@@ -109,8 +109,7 @@ public class DayFour {
 
 			return output;
 		} else {
-			return topLeft == 'S' && center == 'A' && bottomRight == 'M' &&
-				   topRight == 'M' && bottomLeft == 'S';
+			return topLeft == 'S' && center == 'A' && bottomRight == 'M' && topRight == 'M' && bottomLeft == 'S';
 		}
 	}
 }
