@@ -15,5 +15,8 @@ public class Program {
 		Console.WriteLine("Day Three");
 		Console.WriteLine($"Uncorrupted mul scores: {DayThree.AddUp()}");
 		Console.WriteLine($"Uncorrupted mul scores with checks: {DayThree.AddUpWithCheck()}");
+
+		Console.WriteLine("Day Four");
+		Console.WriteLine($"XMAS occurs {DayFour.CountOccurrences("XMAS")}");
 	}
 }
