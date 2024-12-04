@@ -17,11 +17,10 @@ public class DayFour {
 		return grid;
 	}
 
-	public static int CountOccurrences(string word) {
+	public static int CountOccurrences() {
 		char[,] grid = ConvertInputToGrid();
 		int rows = grid.GetLength(0);
 		int cols = grid.GetLength(1);
-		int wordLength = word.Length;
 		int count = 0;
 
 		int[,] directions = {
@@ -41,7 +40,7 @@ public class DayFour {
 					int rowOffset = directions[d, 0];
 					int colOffset = directions[d, 1];
 
-					if (CanFindWord(grid, word, row, col, rowOffset, colOffset)) {
+					if (CanFindWord(grid, row, col, rowOffset, colOffset)) {
 						count++;
 					}
 				}
@@ -52,20 +51,66 @@ public class DayFour {
 	}
 
 
-	static bool CanFindWord(char[,] grid, string word, int startRow, int startCol, int rowOffset, int colOffset) {
+	static bool CanFindWord(char[,] grid, int startRow, int startCol, int rowOffset, int colOffset) {
 		int rows = grid.GetLength(0);
 		int cols = grid.GetLength(1);
-		int wordLength = word.Length;
+		int wordLength = "XMAS".Length;
 
 		for (int i = 0; i < wordLength; i++) {
 			int newRow = startRow + i * rowOffset;
 			int newCol = startCol + i * colOffset;
 
-			if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols || grid[newRow, newCol] != word[i]) {
+			if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols || grid[newRow, newCol] != "XMAS"[i]) {
 				return false;
 			}
 		}
 
 		return true;
+	}
+
+	public static int CountXMASPatterns() {
+		char[,] grid = ConvertInputToGrid();
+		int rows = grid.GetLength(0);
+		int cols = grid.GetLength(1);
+		int count = 0;
+
+		for (int row = 0; row < rows - 2; row++) {
+			for (int col = 0; col < cols - 2; col++) {
+				if (IsXMASPattern(grid, row, col, forward: true) ||
+					IsXMASPattern(grid, row, col, forward: false)) {
+					count++;
+				}
+			}
+		}
+
+		return count;
+	}
+
+	static bool IsXMASPattern(char[,] grid, int row, int col, bool forward) {
+		char topLeft = grid[row, col];
+		char center = grid[row + 1, col + 1];
+		char bottomRight = grid[row + 2, col + 2];
+
+		char topRight = grid[row, col + 2];
+		char bottomLeft = grid[row + 2, col];
+
+		if (forward) {
+			bool output = false;
+
+			if (topLeft == 'M' && center == 'A' && bottomRight == 'S' && topRight == 'S' && bottomLeft == 'M') {
+				output = true;
+			} else if (topLeft == 'M' && center == 'A' && bottomRight == 'S' && topRight == 'M' && bottomLeft == 'S') {
+				output = true;
+			} else if (topLeft == 'S' && center == 'A' && bottomRight == 'M' && topRight == 'M' && bottomLeft == 'S') {
+				output = true;
+			} else if (topLeft == 'S' && center == 'A' && bottomRight == 'M' && topRight == 'S' && bottomLeft == 'M') {
+				output = true;
+			}
+
+			return output;
+		} else {
+			return topLeft == 'S' && center == 'A' && bottomRight == 'M' &&
+				   topRight == 'M' && bottomLeft == 'S';
+		}
 	}
 }
