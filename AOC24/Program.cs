@@ -22,5 +22,6 @@ public class Program {
 
 		Console.WriteLine("Day Five");
 		Console.WriteLine($"Sum of correctly-ordered middle pages: {DayFive.SumOfCorrectMiddlePages()}");
+		Console.WriteLine($"Sum of reordered middle pages: {DayFive.SumOfReorderedMiddlePages()}");
 	}
 }

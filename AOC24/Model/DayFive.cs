@@ -51,6 +51,65 @@ namespace AOC24.Model {
 			return sum;
 		}
 
+		public static int SumOfReorderedMiddlePages() {
+			int sum = 0;
+
+			List<string> updates = ReadUpdates();
+			List<string> rules = ReadRules();
+
+			var orderingRules = ParseRules(rules);
+
+			foreach (var update in updates) {
+				var updatePages = update.Split(',').Select(int.Parse).ToList();
+
+				if (!IsUpdateCorrect(updatePages, orderingRules)) {
+					var reorderedPages = ReorderUpdate(updatePages, orderingRules);
+
+					int middlePage = reorderedPages[reorderedPages.Count / 2];
+					sum += middlePage;
+				}
+			}
+
+			return sum;
+		}
+
+		private static List<int> ReorderUpdate(List<int> update, Dictionary<int, List<int>> rules) {
+			var graph = new Dictionary<int, List<int>>();
+			var indegree = new Dictionary<int, int>();
+
+			foreach (var page in update) {
+				graph[page] = [];
+				indegree[page] = 0;
+			}
+
+			foreach (var rule in rules) {
+				int pageX = rule.Key;
+				foreach (var pageY in rule.Value) {
+					if (update.Contains(pageX) && update.Contains(pageY)) {
+						graph[pageX].Add(pageY);
+						indegree[pageY]++;
+					}
+				}
+			}
+
+			var queue = new Queue<int>(indegree.Where(x => x.Value == 0).Select(x => x.Key));
+			var sorted = new List<int>();
+
+			while (queue.Count > 0) {
+				var current = queue.Dequeue();
+				sorted.Add(current);
+
+				foreach (var neighbor in graph[current]) {
+					indegree[neighbor]--;
+					if (indegree[neighbor] == 0) {
+						queue.Enqueue(neighbor);
+					}
+				}
+			}
+
+			return sorted;
+		}
+
 		private static Dictionary<int, List<int>> ParseRules(List<string> rules) {
 			var ruleDict = new Dictionary<int, List<int>>();
 
