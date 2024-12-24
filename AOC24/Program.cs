@@ -19,5 +19,8 @@ public class Program {
 		Console.WriteLine("Day Four");
 		Console.WriteLine($"XMAS occurs {DayFour.CountOccurrences()} times.");
 		Console.WriteLine($"X-MAS occurs {DayFour.CountXMASPatterns()} times.");
+
+		Console.WriteLine("Day Five");
+		Console.WriteLine($"Sum of correctly-ordered middle pages: {DayFive.SumOfCorrectMiddlePages()}");
 	}
 }
